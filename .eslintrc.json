@@ -10,5 +10,5 @@
     "react-hooks/exhaustive-deps": "off"
   },
   "parser": "@typescript-eslint/parser",
-  "ignorePatterns": ["jest.config.js", "designSystem/"]
+  "ignorePatterns": ["jest.config.js"]
 }
