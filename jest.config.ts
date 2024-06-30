@@ -2,7 +2,6 @@ import type { Config } from 'jest';
 import nextJest from 'next/jest';
 
 const createJestConfig = nextJest({
-  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
   dir: './',
 });
 
@@ -29,13 +28,16 @@ const config: Config = {
   },
   modulePathIgnorePatterns: ['<rootDir>/src/app/api/auth/'],
   preset: 'ts-jest',
-  setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['<rootDir>/.jest/jest.setup.ts'],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'ts-jest',
   },
+  transformIgnorePatterns: [
+    '/node_modules/(?!string-width).+\\.js$',
+  ],
   verbose: true,
 };
 
