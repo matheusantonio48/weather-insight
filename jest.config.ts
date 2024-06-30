@@ -29,7 +29,7 @@ const config: Config = {
   },
   modulePathIgnorePatterns: ['<rootDir>/src/app/api/auth/'],
   preset: 'ts-jest',
-  setupFilesAfterEnv: ['<rootDir>/.jest/jest.setup.ts', '<rootDir>/.jest/setEnvVars.js'],
+  setupFilesAfterEnv: [],
   testEnvironment: 'jest-environment-jsdom',
   testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
