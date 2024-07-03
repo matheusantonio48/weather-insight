@@ -1,6 +1,8 @@
+import { mockWeatherData } from '@/app/mocks/mockWeatherData';
 import WeatherContext from '@/context/weatherContext';
 import { FullWeatherData, TodayWeather } from '@/types/types';
-import { ReactNode, useState } from 'react';
+import { transformToTodayWeather } from '@/utils/transformToTodayWeather';
+import { ReactNode, useEffect, useState } from 'react';
 
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [defaultCity, setDefaultCity] = useState<string>('Your Default City');
@@ -19,10 +21,18 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
     });
   };
 
+  useEffect(() => {
+    setFullWeatherData(mockWeatherData);
+    setTodayWeather(transformToTodayWeather(mockWeatherData));
+  }, []);
+
   const toggleForm = () => setShowForm(!showForm);
 
   const getWeatherByName = (city: string) => {
     console.warn(`Fetching weather for ${city}`);
+    // After fetching weather data:
+    // setFullWeatherData(fetchedData);
+    // setTodayWeather(transformToTodayWeather(fetchedData));
   };
 
   return (
