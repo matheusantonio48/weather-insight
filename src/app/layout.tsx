@@ -3,7 +3,6 @@ import '@/theme/globals.css';
 import type { Metadata } from 'next';
 import React from 'react';
 import StyledComponentsRegistry from './lib/registry';
-import Home from './page';
 
 export const metadata: Metadata = {
   title: 'Weather Insight',
@@ -11,20 +10,20 @@ export const metadata: Metadata = {
   icons: [],
 };
 
-export default function RootLayout({}: Readonly<{
+export default function RootLayout({
+  children,
+}: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <>
-      <ThemeProvider>
-        <html lang="pt-BR">
+      <html lang="pt-BR">
+        <ThemeProvider>
           <body>
-            <StyledComponentsRegistry>
-              <Home />
-            </StyledComponentsRegistry>
+            <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
           </body>
-        </html>
-      </ThemeProvider>
+        </ThemeProvider>
+      </html>
     </>
   );
 }
