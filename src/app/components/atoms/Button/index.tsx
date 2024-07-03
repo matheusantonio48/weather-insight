@@ -26,13 +26,6 @@ const SIZE_STYLES = {
   `,
 };
 
-/**
- * Function to get color styles
- * @param {DefaultTheme} theme - The styled-components theme
- * @param {boolean} [isActive] - Indicates if the button is active
- * @param {'primary' | 'secondary' | 'accent' | 'dark'} [color] - The button color
- * @returns {{ backgroundColor: string, color: string }} - The color styles
- */
 const getColorStyles = (theme: DefaultTheme, isActive?: boolean, color?: 'primary' | 'secondary' | 'accent' | 'dark') => {
   if (isActive) {
     return {
@@ -63,17 +56,8 @@ const getColorStyles = (theme: DefaultTheme, isActive?: boolean, color?: 'primar
   return colorMapping[color ?? 'default'];
 };
 
-/**
- * Function to get size styles
- * @param {'small' | 'medium' | 'large' | undefined} size - The button size
- * @param {DefaultTheme} theme - The styled-components theme
- * @returns {string} - The size styles
- */
 const getSizeStyles = (size: 'small' | 'medium' | 'large' | undefined, theme: DefaultTheme) => SIZE_STYLES[size ?? 'medium'](theme);
 
-/**
- * Styled Button component using styled-components
- */
 export const Button = styled.button<ButtonProps>`
   border: none;
   ${({ theme, isActive, color }) => {

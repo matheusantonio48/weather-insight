@@ -4,7 +4,7 @@ import { Meta, StoryFn } from '@storybook/react';
 import { ThemeProvider } from 'styled-components';
 
 export default {
-  title: 'Components/Button',
+  title: 'Components/Atoms/Container',
   component: Button,
   parameters: {
     docs: {
