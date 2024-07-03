@@ -23,8 +23,8 @@ describe('Button component', () => {
     `);
   });
 
-  it('applies isActive styles correctly', () => {
-    renderButton({ isActive: true });
+  it('applies isSelected styles correctly', () => {
+    renderButton({ isSelected: true });
     const button = screen.getByRole('button', { name: /test button/i });
     expect(button).toHaveStyle(`
       background-color: ${theme.colors.primary};
