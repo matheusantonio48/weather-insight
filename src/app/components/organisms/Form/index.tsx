@@ -1,5 +1,7 @@
 import ListResult from '@/app/components/molecules/ListResult';
 import { useWeather } from '@/context/useWeather';
+import theme from '@/theme/theme';
+import CloseIcon from '@mui/icons-material/Close';
 import React, { FormEvent, useState } from 'react';
 import { Container, Error, FormContainer } from './index.styles';
 
@@ -40,7 +42,7 @@ const Form: React.FC<FormProps> = ({ isVisible, setVisible, getWeatherFunction }
     <Container isVisible={isVisible}>
       <div className="button-container">
         <button type="button" className="close-button" onClick={setVisible}>
-          <img src="/img/close.svg" alt="close button" />
+          <CloseIcon fontSize="large" htmlColor={theme.colors.primary} />
         </button>
       </div>
       <FormContainer onSubmit={handleSearchByText} role="form">
