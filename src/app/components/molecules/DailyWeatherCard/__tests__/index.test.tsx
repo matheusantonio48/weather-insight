@@ -1,51 +1,61 @@
 import { useWeather } from '@/context/useWeather';
-import { DailyWeatherCardProps } from '@/types/types';
+import theme from '@/theme/theme';
+import { getWeatherImage } from '@/utils/getWeatherImage';
 import { render, screen } from '@testing-library/react';
+import 'jest-styled-components';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import DailyWeatherCard from '../index';
 
-jest.mock('@/context/useWeather');
+jest.mock('@/context/useWeather', () => ({
+  useWeather: jest.fn(),
+}));
 
-const mockUseWeather = useWeather as jest.Mock;
+jest.mock('@/utils/getWeatherImage', () => ({
+  getWeatherImage: jest.fn(),
+}));
 
-describe('DailyWeatherCard', () => {
-  beforeEach(() => {
-    mockUseWeather.mockReturnValue({ unitOption: 'C' });
-  });
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+};
 
-  const forecast: DailyWeatherCardProps['forecast'] = {
-    date: '2024-07-01',
-    weekday: 'Mon',
+describe('DailyWeatherCard Component', () => {
+  const forecast = {
+    date: '02/07',
+    weekday: 'Tue',
     max: 30,
     min: 20,
+    description: 'Sunny',
+    condition: 'clear_day',
     cloudiness: 0,
     rain: 0,
     rain_probability: 0,
-    wind_speedy: '5 km/h',
-    description: 'Sunny',
-    condition: 'clear_day',
+    wind_speedy: '10 km/h',
   };
 
-  it('should render the date correctly', () => {
-    render(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
-    expect(screen.getByText('2024-07-01')).toBeInTheDocument();
+  beforeEach(() => {
+    (useWeather as jest.Mock).mockReturnValue({ unitOption: 'C' });
+    (getWeatherImage as jest.Mock).mockReturnValue('/path/to/clear_day.png');
   });
 
-  it('should render the correct temperatures', () => {
-    render(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
+  it('renders correctly with forecast data', () => {
+    renderWithTheme(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
+    expect(screen.getByText('Tue. 02/07')).toBeInTheDocument();
+    expect(screen.getByAltText('Sunny')).toBeInTheDocument();
     expect(screen.getByText('30°C')).toBeInTheDocument();
     expect(screen.getByText('20°C')).toBeInTheDocument();
   });
 
-  it('should render the weather condition image', () => {
-    render(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
-    const img = screen.getByAltText('Sunny');
-    expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('src', 'path_to_icons/clear_day.png');
+  it('renders the correct weather image', () => {
+    renderWithTheme(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
+    const image = screen.getByAltText('Sunny');
+    expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute('src', '/path/to/clear_day.png');
   });
 
-  it('should convert temperatures to Fahrenheit when unitOption is F', () => {
-    mockUseWeather.mockReturnValueOnce({ unitOption: 'F' });
-    render(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
+  it('renders temperatures in Fahrenheit when unitOption is F', () => {
+    (useWeather as jest.Mock).mockReturnValue({ unitOption: 'F' });
+    renderWithTheme(<DailyWeatherCard forecast={forecast} unitOption={'C'} />);
     expect(screen.getByText('86°F')).toBeInTheDocument();
     expect(screen.getByText('68°F')).toBeInTheDocument();
   });

@@ -19,7 +19,7 @@ export default {
       description: 'The content of the button.',
       defaultValue: 'Default Button',
     },
-    isActive: {
+    isSelected: {
       control: 'boolean',
       description: 'Indicates if the button is in an active state.',
       defaultValue: false,
@@ -65,7 +65,7 @@ export default {
 
 interface ButtonStoryProps {
   children: string;
-  isActive?: boolean;
+  isSelected?: boolean;
   rounded?: boolean;
   bold?: boolean;
   marginRight?: boolean;
@@ -106,7 +106,7 @@ TextBoldButton.args = {
 export const ActiveButton = Template.bind({});
 ActiveButton.args = {
   children: 'Active Button',
-  isActive: true,
+  isSelected: true,
 };
 
 export const MarginRightButton = Template.bind({});

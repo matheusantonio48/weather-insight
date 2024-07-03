@@ -1,10 +1,22 @@
+import Container from '@/app/components/molecules/Container';
+import DetailWeather from '@/app/components/organisms/DetailWeather';
+import ResumeWeather from '@/app/components/organisms/ResumeWeather';
+import { useWeather } from '@/context/useWeather';
 import React from 'react';
 
 export const WeatherHome: React.FC = () => {
+  const { fullWeatherData, unitOption, getWeatherByName, setUnitOption } = useWeather();
+
   return (
     <div>
-      <h1>Home Page</h1>
-      <p>Bem-vindo à página inicial!</p>
+      <Container>
+        {fullWeatherData && (
+          <>
+            <ResumeWeather fullWeatherData={fullWeatherData} unitOption={unitOption} getWeatherFunction={getWeatherByName} />
+            <DetailWeather fullWeatherData={fullWeatherData} setUnitOption={setUnitOption} unitOption={unitOption} />
+          </>
+        )}
+      </Container>
     </div>
   );
 };

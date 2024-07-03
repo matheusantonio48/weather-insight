@@ -1,13 +1,14 @@
 import ProgressBar, { ProgressBarProps } from '@/app/components/atoms/ProgressBar';
-import ThemeProvider from '@/theme/ThemeProvider';
+import theme from '@/theme/theme';
 import { Meta, StoryFn } from '@storybook/react';
+import { ThemeProvider } from 'styled-components';
 
 export default {
   title: 'Components/Atoms/ProgressBar',
   component: ProgressBar,
   decorators: [
     (Story) => (
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <Story />
       </ThemeProvider>
     ),
@@ -15,24 +16,29 @@ export default {
   argTypes: {
     percentage: {
       control: { type: 'number', min: 0, max: 100, step: 1 },
-      description: 'Percentage value to display in the progress bar',
-      table: {
-        type: { summary: 'number' },
-      },
+      defaultValue: 50,
     },
   },
-  parameters: {
-    docs: {
-      description: {
-        component: 'A progress bar component that visually represents a percentage value.',
-      },
-    },
-  },
-} as Meta<ProgressBarProps>;
+} as Meta;
 
 const Template: StoryFn<ProgressBarProps> = (args) => <ProgressBar {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
   percentage: 50,
+};
+
+export const ZeroPercent = Template.bind({});
+ZeroPercent.args = {
+  percentage: 0,
+};
+
+export const FiftyPercent = Template.bind({});
+FiftyPercent.args = {
+  percentage: 50,
+};
+
+export const HundredPercent = Template.bind({});
+HundredPercent.args = {
+  percentage: 100,
 };

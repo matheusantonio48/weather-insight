@@ -1,36 +1,34 @@
+import theme from '@/theme/theme';
 import { render, screen } from '@testing-library/react';
 import 'jest-styled-components';
+import React from 'react';
+import { ThemeProvider } from 'styled-components';
 import ProgressBar from '../index';
 
-describe('ProgressBar', () => {
-  it('should render correctly', () => {
-    render(<ProgressBar percentage={50} />);
+const renderWithTheme = (component: React.ReactElement) => {
+  return render(<ThemeProvider theme={theme}>{component}</ThemeProvider>);
+};
 
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+describe('ProgressBar Component', () => {
+  it('renders correctly with default props', () => {
+    renderWithTheme(<ProgressBar percentage={50} />);
+    const progressBar = screen.getByRole('progressbar');
+    expect(progressBar).toBeInTheDocument();
+  });
+
+  it('renders percentage labels correctly', () => {
+    renderWithTheme(<ProgressBar percentage={50} />);
     expect(screen.getByText('0')).toBeInTheDocument();
     expect(screen.getByText('50')).toBeInTheDocument();
     expect(screen.getByText('100')).toBeInTheDocument();
   });
 
-  it('should render the correct width based on percentage', () => {
-    const { container } = render(<ProgressBar percentage={50} />);
-    const progressElement = container.querySelector('[role="progressbar"]');
+  it('animates progress correctly', async () => {
+    const { container } = renderWithTheme(<ProgressBar percentage={50} />);
+    const animatedProgress = container.querySelector('div[role="progressbar"] div');
 
-    expect(progressElement).toHaveStyleRule('width', '100%');
-    expect(progressElement).toHaveStyleRule('width', '50%', { modifier: '::after' });
-  });
+    await new Promise((resolve) => setTimeout(resolve, 1100));
 
-  it('should have transition effect on width change', () => {
-    const { container } = render(<ProgressBar percentage={50} />);
-    const progressElement = container.querySelector('[role="progressbar"]');
-
-    expect(progressElement).toHaveStyleRule('transition', 'width 1s ease', { modifier: '::after' });
-  });
-
-  it('should display the percentage correctly', () => {
-    render(<ProgressBar percentage={75} />);
-
-    const progressElement = screen.getByRole('progressbar');
-    expect(progressElement).toHaveStyleRule('width', '75%', { modifier: '::after' });
+    expect(animatedProgress).toHaveStyle('width: 50%');
   });
 });

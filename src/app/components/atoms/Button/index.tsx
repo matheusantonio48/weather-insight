@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isActive?: boolean;
+  isSelected?: boolean;
   rounded?: boolean;
   bold?: boolean;
   marginRight?: boolean;
@@ -26,8 +26,8 @@ const SIZE_STYLES = {
   `,
 };
 
-const getColorStyles = (theme: DefaultTheme, isActive?: boolean, color?: 'primary' | 'secondary' | 'accent' | 'dark') => {
-  if (isActive) {
+const getColorStyles = (theme: DefaultTheme, isSelected?: boolean, color?: 'primary' | 'secondary' | 'accent' | 'dark') => {
+  if (isSelected) {
     return {
       backgroundColor: theme.colors.primary,
       color: theme.colors.dark,
@@ -60,8 +60,8 @@ const getSizeStyles = (size: 'small' | 'medium' | 'large' | undefined, theme: De
 
 export const Button = styled.button<ButtonProps>`
   border: none;
-  ${({ theme, isActive, color }) => {
-    const colorStyles = getColorStyles(theme, isActive, color);
+  ${({ theme, isSelected, color }) => {
+    const colorStyles = getColorStyles(theme, isSelected, color);
     return `
       background-color: ${colorStyles.backgroundColor};
       color: ${colorStyles.color};

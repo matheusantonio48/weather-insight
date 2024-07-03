@@ -1,3 +1,4 @@
+import { mockWeatherData } from '@/app/mocks/mockWeatherData';
 import { WeatherProvider } from '@/context/weatherProvider';
 import ThemeProvider from '@/theme/ThemeProvider';
 import { DetailWeatherProps } from '@/types/types';
@@ -7,56 +8,7 @@ import DetailWeather from '../index';
 
 describe('DetailWeather', () => {
   const mockSetUnitOption = jest.fn();
-  const fullWeatherData = {
-    current: {
-      temp: 25,
-      date: '02/07/2024',
-      time: '11:06',
-      condition_code: '29',
-      description: 'Sunny',
-      currently: 'day',
-      city: 'New York',
-      img_id: '29',
-      humidity: 73,
-      cloudiness: 20,
-      rain: 0,
-      wind_speedy: '4.12 km/h',
-      wind_direction: 100,
-      wind_cardinal: 'E',
-      sunrise: '06:49 am',
-      sunset: '05:31 pm',
-      moon_phase: 'waning_crescent',
-      condition_slug: 'clear_day',
-      city_name: 'New York',
-      timezone: '-04:00',
-    },
-    forecast: [
-      {
-        date: '2024-07-01',
-        weekday: 'Mon',
-        max: 30,
-        min: 20,
-        cloudiness: 0,
-        rain: 0,
-        rain_probability: 0,
-        wind_speedy: '5 km/h',
-        description: 'Sunny',
-        condition: 'clear_day',
-      },
-      {
-        date: '2024-07-02',
-        weekday: 'Tue',
-        max: 28,
-        min: 18,
-        cloudiness: 0,
-        rain: 0,
-        rain_probability: 0,
-        wind_speedy: '10 km/h',
-        description: 'Rainy',
-        condition: 'rain',
-      },
-    ],
-  };
+  const fullWeatherData = mockWeatherData;
 
   const props: DetailWeatherProps = {
     fullWeatherData,
@@ -74,13 +26,13 @@ describe('DetailWeather', () => {
 
   it('should render the city name correctly', () => {
     renderWithProviders(<DetailWeather {...props} />);
-    expect(screen.getByText("New York, Today's Highlights")).toBeInTheDocument();
+    expect(screen.getByText("Campinas, Today's Highlights")).toBeInTheDocument();
   });
 
   it('should render the forecast cards correctly', () => {
     renderWithProviders(<DetailWeather {...props} />);
-    expect(screen.getByText('2024-07-01')).toBeInTheDocument();
-    expect(screen.getByText('2024-07-02')).toBeInTheDocument();
+    expect(screen.getByText('Ter. 02/07')).toBeInTheDocument();
+    expect(screen.getByText('Qua. 03/07')).toBeInTheDocument();
   });
 
   it('should call setUnitOption with "C" when the Celsius button is clicked', () => {
@@ -100,6 +52,7 @@ describe('DetailWeather', () => {
   it('should render the highlights cards correctly', () => {
     renderWithProviders(<DetailWeather {...props} />);
     expect(screen.getByText('Humidity')).toBeInTheDocument();
-    expect(screen.getByText('Wind Speed')).toBeInTheDocument();
+    expect(screen.getByText('Wind Status')).toBeInTheDocument();
+    expect(screen.getByText('Cloudiness')).toBeInTheDocument();
   });
 });

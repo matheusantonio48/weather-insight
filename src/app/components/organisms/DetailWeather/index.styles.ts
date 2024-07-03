@@ -30,6 +30,10 @@ export const Container = styled.div`
       display: flex;
       justify-content: flex-end;
       margin-bottom: 2rem;
+
+      & button:not(:last-child) {
+        margin-right: ${theme.spacing.spacing4xs};
+      }
     }
   }
   & .daily-weather-container {
@@ -40,10 +44,6 @@ export const Container = styled.div`
     padding: 2rem 2rem 0;
     margin-bottom: 2rem;
 
-    & .fake-card {
-      display: none;
-    }
-
     @media (min-width: ${theme.breakpoint.md}px) {
       padding: 0;
 
@@ -51,7 +51,7 @@ export const Container = styled.div`
         margin-right: 0;
       }
       & div:nth-of-type(4) {
-        margin-right: 10px;
+        margin-right: ${theme.spacing.spacing4xs};
       }
       & div:nth-of-type(5) {
         margin-right: 0;
@@ -59,16 +59,13 @@ export const Container = styled.div`
       & .fake-card {
         display: block;
         width: 30%;
-        margin-bottom: 10px;
-        margin-right: 10px;
+        margin-bottom: ${theme.spacing.spacing4xs};
+        margin-right: ${theme.spacing.spacing4xs};
       }
     }
     @media (min-width: ${theme.breakpoint.lg}px) {
       & div:nth-of-type(3) {
-        margin-right: 10px;
-      }
-      & .fake-card {
-        display: none;
+        margin-right: ${theme.spacing.spacing4xs};
       }
     }
   }

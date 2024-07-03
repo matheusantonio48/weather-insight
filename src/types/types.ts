@@ -11,6 +11,10 @@ export interface Forecast {
   condition: string;
 }
 
+export interface ForecastImage {
+  condition: string;
+}
+
 export interface CurrentWeather {
   temp: number;
   date: string;
@@ -35,13 +39,12 @@ export interface CurrentWeather {
 }
 
 export interface HightLight {
-  data: number;
-  showBar: boolean;
-  title: string;
-  showWind: boolean;
-  unit: string;
+  value?: number;
+  title?: string;
+  unit?: string;
   windDir?: number;
   windDirText?: string;
+  windSpeed?: string;
 }
 
 export interface FullWeatherData {
@@ -61,17 +64,15 @@ export interface DailyWeatherCardProps {
 }
 
 export interface TodayWeather {
-  icon: string;
+  condition_slug: string;
   weather: string;
-  tempC: number;
-  tempF: number;
+  temp: number;
 }
 
 export interface ResumeWeatherProps {
   fullWeatherData: FullWeatherData;
   unitOption: 'C' | 'F';
   getWeatherFunction: (city: string) => void;
-  setError: (error: boolean) => void;
 }
 
 export interface HightLigthsCardProps {
