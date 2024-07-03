@@ -39,13 +39,12 @@ export interface CurrentWeather {
 }
 
 export interface HightLight {
-  data: number;
-  showBar: boolean;
-  title: string;
-  showWind: boolean;
-  unit: string;
+  value?: number;
+  title?: string;
+  unit?: string;
   windDir?: number;
   windDirText?: string;
+  windSpeed?: string;
 }
 
 export interface FullWeatherData {
@@ -74,7 +73,6 @@ export interface ResumeWeatherProps {
   fullWeatherData: FullWeatherData;
   unitOption: 'C' | 'F';
   getWeatherFunction: (city: string) => void;
-  setError: (error: boolean) => void;
 }
 
 export interface HightLigthsCardProps {
