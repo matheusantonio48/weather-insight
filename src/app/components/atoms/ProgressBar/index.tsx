@@ -1,5 +1,5 @@
 import React from 'react';
-import { PercentagesContainer, Progress, ProgressBarContainer } from './index.styles';
+import { AnimatedProgress, PercentagesContainer, Progress, ProgressBarContainer } from './index.styles';
 
 export interface ProgressBarProps {
   percentage: number;
@@ -13,7 +13,14 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ percentage }) => {
         <p>50</p>
         <p>100</p>
       </PercentagesContainer>
-      <Progress role="progressbar" percentage={percentage} />
+      <Progress role="progressbar">
+        <AnimatedProgress
+          percentage={percentage}
+          initial={{ width: 0 }}
+          animate={{ width: `${percentage}%` }}
+          transition={{ duration: 1 }}
+        />
+      </Progress>
     </ProgressBarContainer>
   );
 };
