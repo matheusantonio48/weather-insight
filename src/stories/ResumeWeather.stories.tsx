@@ -1,48 +1,23 @@
 import ResumeWeather from '@/app/components/organisms/ResumeWeather';
-import { WeatherProvider } from '@/context/weatherProvider'; // Importe o WeatherProvider
-import ThemeProvider from '@/theme/ThemeProvider';
+import { WeatherProvider } from '@/context/weatherProvider';
+import theme from '@/theme/theme';
 import { ResumeWeatherProps } from '@/types/types';
 import { Meta, StoryFn } from '@storybook/react';
+import { ThemeProvider } from 'styled-components';
 
 export default {
   title: 'Components/Organisms/ResumeWeather',
   component: ResumeWeather,
   decorators: [
     (Story) => (
-      <ThemeProvider>
+      <ThemeProvider theme={theme}>
         <WeatherProvider>
           <Story />
         </WeatherProvider>
       </ThemeProvider>
     ),
   ],
-  argTypes: {
-    fullWeatherData: {
-      control: 'object',
-      description: "The full weather data including today's weather and location name",
-      table: {
-        type: { summary: 'object' },
-      },
-    },
-    unitOption: {
-      control: 'radio',
-      options: ['C', 'F'],
-      description: 'Temperature unit option (Celsius or Fahrenheit)',
-      table: {
-        type: { summary: 'C | F' },
-      },
-    },
-    getWeatherFunction: { action: 'getWeatherFunction' },
-    setError: { action: 'setError' },
-  },
-  parameters: {
-    docs: {
-      description: {
-        component: 'Component that displays a summary of the current weather with options to search for other locations.',
-      },
-    },
-  },
-} as Meta<ResumeWeatherProps>;
+} as Meta;
 
 const Template: StoryFn<ResumeWeatherProps> = (args) => <ResumeWeather {...args} />;
 
@@ -101,8 +76,5 @@ Default.args = {
   unitOption: 'C',
   getWeatherFunction: (city: string) => {
     console.warn(`Fetching weather data for ${city}`);
-  },
-  setError: (error: boolean) => {
-    console.warn(`Error: ${error}`);
   },
 };
