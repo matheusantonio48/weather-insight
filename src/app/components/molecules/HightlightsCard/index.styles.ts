@@ -8,7 +8,7 @@ interface CardFooterProps {
 export const HightLightCardContainer = styled.div`
   width: 100%;
   padding: 2rem;
-  background-color: ${theme.colors.active};
+  background-color: ${theme.background.secondary};
   margin-bottom: 2rem;
 
   @media (min-width: ${theme.breakpoint.md}px) {
