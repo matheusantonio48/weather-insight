@@ -1,6 +1,6 @@
 import useTemperature from '@/hooks/useTemperature';
 import { Forecast } from '@/types/types';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 
 describe('useTemperature', () => {
   const forecast: Forecast = {
