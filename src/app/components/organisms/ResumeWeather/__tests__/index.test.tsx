@@ -47,7 +47,6 @@ describe('ResumeWeather Component', () => {
     expect(screen.getByText('Sunny')).toBeInTheDocument();
     expect(screen.getByText('Campinas')).toBeInTheDocument();
 
-  
     expect(screen.getByText('25')).toBeInTheDocument();
     expect(screen.getByText('°C')).toBeInTheDocument();
   });
