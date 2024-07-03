@@ -2,21 +2,24 @@ import theme from '@/theme/theme';
 import styled from 'styled-components';
 
 export const DailyWeatherCardContainer = styled.div`
-  height: 200px;
   display: flex;
   flex-direction: column;
-  background-color: ${theme.colors.dark};
-  width: 45%;
+  background-color: ${theme.background.secondary};
   margin-bottom: ${theme.spacing.spacingMd};
   padding: ${theme.spacing.spacingXs};
+  height: 200px;
+  width: 100%;
+  max-width: 200px;
+  box-sizing: border-box;
 
   @media (min-width: ${theme.breakpoint.md}px) {
-    width: 30%;
-    margin-bottom: ${theme.spacing.spacingSm};
-    margin-right: ${theme.spacing.spacingSm};
+    height: 150px;
+    max-width: 150px;
   }
+
   @media (min-width: ${theme.breakpoint.lg}px) {
-    width: 18%;
+    height: 180px;
+    max-width: 180px;
   }
 
   & .text {
@@ -35,11 +38,12 @@ export const DailyWeatherCardContainer = styled.div`
     }
   }
   & .temperature-container {
+    height: 25%;
     display: flex;
     justify-content: space-between;
 
     & .secondary-color {
-      color: ${theme.colors.gray};
+      color: ${theme.colors.secondary};
     }
   }
 `;
