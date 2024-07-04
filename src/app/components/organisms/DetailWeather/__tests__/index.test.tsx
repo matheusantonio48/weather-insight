@@ -54,5 +54,6 @@ describe('DetailWeather', () => {
     expect(screen.getByText('Humidity')).toBeInTheDocument();
     expect(screen.getByText('Wind Status')).toBeInTheDocument();
     expect(screen.getByText('Cloudiness')).toBeInTheDocument();
+    expect(screen.getByText('Rainfall')).toBeInTheDocument();
   });
 });

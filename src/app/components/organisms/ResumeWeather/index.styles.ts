@@ -109,7 +109,7 @@ export const ResumeInformationContainer = styled.div`
   }
   & .location-date-container {
     width: 100%;
-    position: absolute;
+    margin-top: ${theme.spacing.spacing5xl};
     bottom: 1rem;
 
     & .date-text,

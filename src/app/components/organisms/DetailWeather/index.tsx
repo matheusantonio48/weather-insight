@@ -22,7 +22,7 @@ const DetailWeather: React.FC<DetailWeatherProps> = (props) => {
           </Button>
         </div>
         <div className="daily-weather-container">
-          {forecast.map((dayForecast, index) => (
+          {forecast?.map((dayForecast, index) => (
             <DailyWeatherCard key={index} forecast={dayForecast} unitOption={unitOption} />
           ))}
         </div>

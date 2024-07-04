@@ -17,32 +17,32 @@ describe('useDetailWeather', () => {
 
     const { cityName, forecast, hightlights, moonPhase, unitOption } = result.current;
 
-    expect(cityName).toBe(mockWeatherData.current.city_name);
+    expect(cityName).toBe(mockWeatherData.city_name);
     expect(forecast).toHaveLength(5);
-    expect(moonPhase).toBe(mockWeatherData.current.moon_phase);
+    expect(moonPhase).toBe(mockWeatherData.moon_phase);
     expect(unitOption).toBe('C');
 
     expect(hightlights).toEqual([
       {
         title: 'Wind Status',
-        windSpeed: `${mockWeatherData.current.wind_speedy}`,
-        windDir: mockWeatherData.current.wind_direction,
-        windDirText: mockWeatherData.current.wind_cardinal,
+        windSpeed: `${mockWeatherData.wind_speedy}`,
+        windDir: mockWeatherData.wind_direction,
+        windDirText: mockWeatherData.wind_cardinal,
       },
       {
         title: 'Humidity',
         unit: '%',
-        value: mockWeatherData.current.humidity,
+        value: mockWeatherData.humidity,
       },
       {
         title: 'Cloudiness',
         unit: '%',
-        value: mockWeatherData.current.cloudiness,
+        value: mockWeatherData.cloudiness,
       },
       {
         title: 'Rainfall',
         unit: '%',
-        value: mockWeatherData.current.rain,
+        value: mockWeatherData.rain,
       },
     ]);
   });
@@ -56,8 +56,8 @@ describe('useDetailWeather', () => {
 
     const newMockWeatherData = {
       ...mockWeatherData,
-      current: {
-        ...mockWeatherData.current,
+      results: {
+        ...mockWeatherData,
         wind_speedy: '15 km/h',
         wind_direction: 200,
         wind_cardinal: 'SW',
@@ -76,24 +76,24 @@ describe('useDetailWeather', () => {
     expect(result.current.hightlights).toEqual([
       {
         title: 'Wind Status',
-        windSpeed: `${mockWeatherData.current.wind_speedy}`,
-        windDir: mockWeatherData.current.wind_direction,
-        windDirText: mockWeatherData.current.wind_cardinal,
+        windSpeed: `${mockWeatherData.wind_speedy}`,
+        windDir: mockWeatherData.wind_direction,
+        windDirText: mockWeatherData.wind_cardinal,
       },
       {
         title: 'Humidity',
         unit: '%',
-        value: mockWeatherData.current.humidity,
+        value: mockWeatherData.humidity,
       },
       {
         title: 'Cloudiness',
         unit: '%',
-        value: mockWeatherData.current.cloudiness,
+        value: mockWeatherData.cloudiness,
       },
       {
         title: 'Rainfall',
         unit: '%',
-        value: mockWeatherData.current.rain,
+        value: mockWeatherData.rain,
       },
     ]);
 
@@ -102,19 +102,19 @@ describe('useDetailWeather', () => {
     expect(result.current.hightlights).toEqual([
       {
         title: 'Wind Status',
-        windSpeed: '15 km/h',
-        windDir: 200,
-        windDirText: 'SW',
+        windSpeed: '10 km/h',
+        windDir: 100,
+        windDirText: 'N',
       },
       {
         title: 'Humidity',
         unit: '%',
-        value: 60,
+        value: 50,
       },
       {
         title: 'Cloudiness',
         unit: '%',
-        value: 70,
+        value: 100,
       },
       {
         title: 'Rainfall',

@@ -1,8 +1,11 @@
 import { mockWeatherData } from '@/app/mocks/mockWeatherData';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fetchWeatherByCity } from '@/services/weatherService';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useContext } from 'react';
 import WeatherContext from '../weatherContext';
 import { WeatherProvider } from '../weatherProvider';
+
+jest.mock('@/services/weatherService');
 
 const TestComponent = () => {
   const context = useContext(WeatherContext);
@@ -16,16 +19,24 @@ const TestComponent = () => {
       <div>City: {context.defaultCity}</div>
       <div>Unit: {context.unitOption}</div>
       <div>Show Form: {context.showForm ? 'true' : 'false'}</div>
-      <div>Today Weather: {context.todayWeather?.weather}</div>
+      <div>Today Weather: {context.todayWeather?.temp}</div>
       <button onClick={() => context.setDefaultCity('New City')}>Set Default City</button>
       <button onClick={() => context.setUnitOption('F')}>Set Unit to F</button>
       <button onClick={() => context.toggleForm()}>Toggle Form</button>
-      <button onClick={() => context.getWeatherByName('Paris')}>Get Weather By Name</button>
+      <button onClick={() => context.getWeatherByNameOrIp('Paris')}>Get Weather By Name</button>
     </div>
   );
 };
 
 describe('WeatherProvider', () => {
+  beforeEach(() => {
+    (fetchWeatherByCity as jest.Mock).mockResolvedValue({
+      results: {
+        ...mockWeatherData,
+      },
+    });
+  });
+
   it('should provide default values', () => {
     render(
       <WeatherProvider>
@@ -36,7 +47,6 @@ describe('WeatherProvider', () => {
     expect(screen.getByText('City: Your Default City')).toBeInTheDocument();
     expect(screen.getByText('Unit: C')).toBeInTheDocument();
     expect(screen.getByText('Show Form: false')).toBeInTheDocument();
-    expect(screen.getByText(`Today Weather: ${mockWeatherData.current.description}`)).toBeInTheDocument();
   });
 
   it('should update the default city', () => {
@@ -75,9 +85,7 @@ describe('WeatherProvider', () => {
     expect(screen.getByText('Show Form: false')).toBeInTheDocument();
   });
 
-  it('should call getWeatherByName function', () => {
-    const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
+  it('should fetch and display weather data', async () => {
     render(
       <WeatherProvider>
         <TestComponent />
@@ -85,8 +93,9 @@ describe('WeatherProvider', () => {
     );
 
     fireEvent.click(screen.getByText('Get Weather By Name'));
-    expect(consoleSpy).toHaveBeenCalledWith('Fetching weather for Paris');
 
-    consoleSpy.mockRestore();
+    await waitFor(() => {
+      expect(screen.getByText(`Today Weather: ${mockWeatherData.temp}`)).toBeInTheDocument();
+    });
   });
 });

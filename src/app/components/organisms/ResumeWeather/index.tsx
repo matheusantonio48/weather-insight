@@ -44,10 +44,18 @@ const WeatherInfo: React.FC<WeatherInfoProps> = ({ currentTemp, unitOption, weat
 );
 
 const ResumeWeather: React.FC<ResumeWeatherProps> = ({ fullWeatherData, unitOption, getWeatherFunction }) => {
-  const { todayWeather, toggleForm, showForm } = useWeather();
+  const { todayWeather, toggleForm, showForm, getWeatherByNameOrIp } = useWeather();
   const { temp } = todayWeather ? getTemperatures({ temp: todayWeather.temp }, unitOption) : { temp: null };
 
-  const { date, city_name: cityName } = fullWeatherData.current;
+  const { date, city_name: cityName } = fullWeatherData;
+
+  const handleUseCurrentLocation = async () => {
+    try {
+      await getWeatherByNameOrIp();
+    } catch (error) {
+      console.error('Failed to use current location', error);
+    }
+  };
 
   return (
     <ResumeWeatherContainer>
@@ -55,7 +63,7 @@ const ResumeWeather: React.FC<ResumeWeatherProps> = ({ fullWeatherData, unitOpti
         <Button color="secondary" onClick={toggleForm}>
           Search for places
         </Button>
-        <Button color="secondary" rounded>
+        <Button onClick={handleUseCurrentLocation} color="secondary" rounded>
           <MyLocationIcon />
         </Button>
       </ActionsWeatherContainer>
