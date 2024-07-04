@@ -5,14 +5,14 @@ import { useWeather } from '@/context/useWeather';
 import React from 'react';
 
 export const WeatherHome: React.FC = () => {
-  const { fullWeatherData, unitOption, getWeatherByName, setUnitOption } = useWeather();
+  const { fullWeatherData, unitOption, getWeatherByNameOrIp, setUnitOption } = useWeather();
 
   return (
     <div>
       <Container>
         {fullWeatherData && (
           <>
-            <ResumeWeather fullWeatherData={fullWeatherData} unitOption={unitOption} getWeatherFunction={getWeatherByName} />
+            <ResumeWeather fullWeatherData={fullWeatherData} unitOption={unitOption} getWeatherFunction={getWeatherByNameOrIp} />
             <DetailWeather fullWeatherData={fullWeatherData} setUnitOption={setUnitOption} unitOption={unitOption} />
           </>
         )}
