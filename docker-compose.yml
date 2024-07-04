@@ -6,10 +6,28 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - '3000:3000'
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
+    env_file:
+      - .env
     environment:
-      NODE_ENV: development
+      NODE_ENV: ${NODE_ENV}
+
+  storybook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: npm run storybook
+    ports:
+      - '6006:6006'
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/storybook-static
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: ${NODE_ENV}

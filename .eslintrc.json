@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "plugin:storybook/recommended",
+    "plugin:storybook/recommended",
+    "plugin:storybook/recommended",
+    "plugin:storybook/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "warn",
+    "prefer-const": "off",
+    "@next/next/no-img-element": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off"
+  },
+  "parser": "@typescript-eslint/parser",
+  "ignorePatterns": ["jest.config.js", "*.css"]
+}
