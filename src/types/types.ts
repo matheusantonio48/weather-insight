@@ -15,7 +15,16 @@ export interface ForecastImage {
   condition: string;
 }
 
-export interface CurrentWeather {
+export interface HightLight {
+  value?: number;
+  title?: string;
+  unit?: string;
+  windDir?: number;
+  windDirText?: string;
+  windSpeed?: string;
+}
+
+export interface FullWeatherData {
   temp: number;
   date: string;
   time: string;
@@ -36,19 +45,6 @@ export interface CurrentWeather {
   condition_slug: string;
   city_name: string;
   timezone: string;
-}
-
-export interface HightLight {
-  value?: number;
-  title?: string;
-  unit?: string;
-  windDir?: number;
-  windDirText?: string;
-  windSpeed?: string;
-}
-
-export interface FullWeatherData {
-  current: CurrentWeather;
   forecast: Forecast[];
 }
 
@@ -87,10 +83,8 @@ export interface WeatherContextProps {
   unitOption: 'C' | 'F';
   setUnitOption: (unit: 'C' | 'F') => void;
   fullWeatherData: FullWeatherData | null;
-  setFullWeatherData: (data: FullWeatherData) => void;
   todayWeather: TodayWeather | null;
-  setTodayWeather: (data: TodayWeather) => void;
   showForm: boolean;
   toggleForm: () => void;
-  getWeatherByName: (city: string) => void;
+  getWeatherByNameOrIp: (city?: string) => void;
 }

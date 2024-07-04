@@ -2,40 +2,40 @@ import { DetailWeatherProps } from '@/types/types';
 import { useMemo } from 'react';
 
 export const useDetailWeather = ({ fullWeatherData, unitOption }: DetailWeatherProps) => {
-  const { current, forecast } = fullWeatherData;
+  const { wind_speedy, wind_direction, wind_cardinal, humidity, cloudiness, forecast, rain, city_name, moon_phase } = fullWeatherData;
 
   const hightlights = useMemo(
     () => [
       {
         title: 'Wind Status',
-        windSpeed: `${current.wind_speedy}`,
-        windDir: current.wind_direction,
-        windDirText: current.wind_cardinal,
+        windSpeed: `${wind_speedy}`,
+        windDir: wind_direction,
+        windDirText: wind_cardinal,
       },
       {
         title: 'Humidity',
         unit: '%',
-        value: current.humidity,
+        value: humidity,
       },
       {
         title: 'Cloudiness',
         unit: '%',
-        value: current.cloudiness,
+        value: cloudiness,
       },
       {
         title: 'Rainfall',
         unit: '%',
-        value: current.rain,
+        value: rain,
       },
     ],
-    [current]
+    [wind_speedy, wind_direction, wind_cardinal, humidity, cloudiness, forecast, rain, city_name, moon_phase]
   );
 
   return {
-    cityName: current.city_name,
-    forecast: forecast.slice(0, 5),
+    cityName: city_name,
+    forecast: forecast?.slice(0, 5),
     hightlights,
-    moonPhase: current.moon_phase,
+    moonPhase: moon_phase,
     unitOption,
   };
 };

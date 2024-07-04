@@ -1,39 +1,41 @@
-import { mockWeatherData } from '@/app/mocks/mockWeatherData';
 import WeatherContext from '@/context/weatherContext';
-import { FullWeatherData, TodayWeather } from '@/types/types';
+import { useWeatherCache } from '@/hooks/useWeatherCache';
+import { TodayWeather } from '@/types/types';
 import { transformToTodayWeather } from '@/utils/transformToTodayWeather';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 
 export const WeatherProvider = ({ children }: { children: ReactNode }) => {
   const [defaultCity, setDefaultCity] = useState<string>('Your Default City');
   const [previousSearches, setPreviousSearches] = useState<string[]>([]);
   const [unitOption, setUnitOption] = useState<'C' | 'F'>('C');
-  const [fullWeatherData, setFullWeatherData] = useState<FullWeatherData | null>(null);
   const [todayWeather, setTodayWeather] = useState<TodayWeather | null>(null);
   const [showForm, setShowForm] = useState<boolean>(false);
+  const { fullWeatherData, getWeatherByNameOrIp } = useWeatherCache();
 
-  const addPreviousSearch = (city: string) => {
+  const addPreviousSearch = useCallback((city: string) => {
     setPreviousSearches((prev) => {
       if (!prev.includes(city)) {
         return [city, ...prev];
       }
       return prev;
     });
-  };
-
-  useEffect(() => {
-    setFullWeatherData(mockWeatherData);
-    setTodayWeather(transformToTodayWeather(mockWeatherData));
   }, []);
 
-  const toggleForm = () => setShowForm(!showForm);
+  useEffect(() => {
+    if (fullWeatherData) {
+      setTodayWeather(transformToTodayWeather(fullWeatherData));
+    }
+  }, [fullWeatherData]);
 
-  const getWeatherByName = (city: string) => {
-    console.warn(`Fetching weather for ${city}`);
-    // After fetching weather data:
-    // setFullWeatherData(fetchedData);
-    // setTodayWeather(transformToTodayWeather(fetchedData));
-  };
+  useEffect(() => {
+    if (defaultCity) {
+      getWeatherByNameOrIp(defaultCity);
+      addPreviousSearch(defaultCity);
+    }
+    getWeatherByNameOrIp();
+  }, [defaultCity, getWeatherByNameOrIp, addPreviousSearch]);
+
+  const toggleForm = useCallback(() => setShowForm((prev) => !prev), []);
 
   return (
     <WeatherContext.Provider
@@ -45,12 +47,10 @@ export const WeatherProvider = ({ children }: { children: ReactNode }) => {
         unitOption,
         setUnitOption,
         fullWeatherData,
-        setFullWeatherData,
         todayWeather,
-        setTodayWeather,
         showForm,
         toggleForm,
-        getWeatherByName,
+        getWeatherByNameOrIp,
       }}
     >
       {children}
